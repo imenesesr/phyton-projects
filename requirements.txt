@@ -1,2 +1,2 @@
 Flask==2.3.2
-coqui-ai-TTS==0.20.1
+TTS==0.20.1
