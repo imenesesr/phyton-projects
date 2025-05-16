@@ -1,0 +1,36 @@
+# Entorno virtual
+transcribe_env/
+venv/
+env/
+.env/
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Archivos temporales
+temp/
+*.mp3
+*.wav
+*.ogg
+*.m4a
+
+# Logs y bases de datos
+*.log
+*.sqlite
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Archivos de configuración local
+.env
+.env.local
