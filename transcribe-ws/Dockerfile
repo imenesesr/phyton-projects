@@ -1,26 +1,24 @@
 FROM python:3.9-slim
 
-# Instalar dependencias del sistema
+# 1. Instalar solo dependencias críticas del sistema
 RUN apt-get update && \
-    apt-get install -y ffmpeg && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y --no-install-recommends \
+    ffmpeg \
+    libgomp1 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Establecer directorio de trabajo
 WORKDIR /app
 
-# Copiar archivos de requisitos e instalar dependencias
+# 2. Instalar torch CPU (versión ligera) antes que otros paquetes
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir torch==2.1.0+cpu --index-url https://download.pytorch.org/whl/cpu
 
-# Copiar el código de la aplicación
+# 3. Instalar el resto de dependencias
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY . .
-
-# Crear directorio temporal
 RUN mkdir -p /app/temp
 
-# Exponer puerto
 EXPOSE 8000
-
-# Comando para ejecutar la aplicación
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:app", "--workers", "2", "--timeout", "300"]
