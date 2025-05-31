@@ -1,10 +1,12 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 # 1. Instalar solo dependencias críticas del sistema
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     ffmpeg \
     libgomp1 \
+    espeak-ng \
+    libespeak-ng1 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
