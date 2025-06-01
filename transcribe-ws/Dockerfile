@@ -16,12 +16,6 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir torch==2.1.0+cpu torchaudio==2.1.0+cpu --index-url https://download.pytorch.org/whl/cpu
 
-# 3. Instalar el resto de dependencias
-# ... existing code ...
-# 2. Instalar torch CPU (versión ligera) antes que otros paquetes
-COPY requirements.txt .
-RUN pip install --no-cache-dir torch==2.1.0+cpu torchaudio==2.1.0+cpu --index-url https://download.pytorch.org/whl/cpu
-
 # 3. Instalar el resto de dependencias con forzado de CPU
 RUN pip install --no-cache-dir -r requirements.txt --no-deps && \
     pip install --no-cache-dir TTS --no-deps
