@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.9-slim
 
 # 1. Instalar solo dependencias críticas del sistema
 RUN apt-get update && \
@@ -15,8 +15,9 @@ WORKDIR /app
 # 2. Copiar requirements.txt primero para aprovechar el caché de Docker
 COPY requirements.txt .
 
-# 3. Instalar dependencias de Python
-RUN pip install --no-cache-dir -r requirements.txt && \
+# 3. Actualizar pip e instalar dependencias de Python
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir torch==2.1.0+cpu torchaudio==2.1.0+cpu --index-url https://download.pytorch.org/whl/cpu 
 
 # 4. Copiar el resto del código
