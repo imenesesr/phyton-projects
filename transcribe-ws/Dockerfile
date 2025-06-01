@@ -18,7 +18,7 @@ COPY requirements.txt .
 # 3. Actualizar pip e instalar dependencias de Python
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir torch==2.1.0+cpu torchaudio==2.1.0+cpu --index-url https://download.pytorch.org/whl/cpu 
+    pip install --no-cache-dir torch==2.1.0 torchaudio==2.1.0+cpu --index-url https://download.pytorch.org/whl/cpu 
 
 # 4. Copiar el resto del código
 COPY . .
