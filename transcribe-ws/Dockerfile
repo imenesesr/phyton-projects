@@ -1,4 +1,5 @@
-FROM python:3.9-bullseye  # Debian con más paquetes preinstalados
+# Debian con más paquetes preinstalados
+FROM python:3.9-bullseye  
 
 RUN apt-get update && \
     apt-get install -y ffmpeg libgomp1 espeak-ng && \
