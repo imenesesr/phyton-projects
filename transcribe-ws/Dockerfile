@@ -12,16 +12,21 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# 2. Instalar torch CPU (versión ligera) antes que otros paquetes
+# 2. Copiar requirements.txt primero para aprovechar el caché de Docker
 COPY requirements.txt .
-RUN pip install --no-cache-dir torch==2.1.0+cpu torchaudio==2.1.0+cpu --index-url https://download.pytorch.org/whl/cpu
 
-# 3. Instalar el resto de dependencias con forzado de CPU
-RUN pip install --no-cache-dir -r requirements.txt --no-deps && \
-    pip install --no-cache-dir TTS --no-deps
+# 3. Instalar dependencias de Python
+RUN pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir torch==2.1.0+cpu torchaudio==2.1.0+cpu --index-url https://download.pytorch.org/whl/cpu 
 
+# 4. Copiar el resto del código
 COPY . .
+
+# Crear directorios temporales
 RUN mkdir -p /app/temp
 
+# Exponer el puerto
 EXPOSE 8000
+
+# Comando para ejecutar la aplicación
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:app", "--workers", "2", "--timeout", "300"]

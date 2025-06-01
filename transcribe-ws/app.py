@@ -22,15 +22,15 @@ def initialize_model():
     whisper_model = whisper.load_model("base").to(device)
     
     # Inicializar modelo TTS
-    tts_model = TTS(model_name="tts_models/multilingual/multi-dataset/xtts_v2",
+    tts_model = TTS(model_name="tts_models/es/mai/tacotron2-DDC",
                    progress_bar=False,
                    gpu=torch.cuda.is_available())
     return whisper_model, tts_model
 
-whisper_model, tts_model = initialize_models()
+whisper_model, tts_model = initialize_model()
 executor = ThreadPoolExecutor(max_workers=2)
 
-@app.route('/transcribe', methods=['POST'])
+@app.route('/stt', methods=['POST'])
 def transcribe_audio():
     try:
         if 'audio' not in request.files:
