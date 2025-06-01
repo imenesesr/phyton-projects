@@ -7,6 +7,10 @@ RUN apt-get update && \
     libgomp1 \
     espeak-ng \
     libespeak-ng1 \
+    gcc \
+    g++ \
+    python3-dev \
+    make \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -17,8 +21,8 @@ COPY requirements.txt .
 
 # 3. Actualizar pip e instalar dependencias de Python
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir torch==2.1.0 torchaudio==2.1.0 --index-url https://download.pytorch.org/whl/cpu 
+    pip install --no-cache-dir torch==2.1.0 torchaudio==2.1.0 --index-url https://download.pytorch.org/whl/cpu && \
+    BLIS_ARCH="generic" pip install --no-cache-dir -r requirements.txt
 
 # 4. Copiar el resto del código
 COPY . .
